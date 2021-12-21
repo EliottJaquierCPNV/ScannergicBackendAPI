@@ -16,7 +16,10 @@ namespace ScannergicAPI.Controllers
         {
             repository = new AllergenRepository();
         }
-
+        /// <summary>
+        /// Returns a list of all the allergens as a JSON
+        /// </summary>
+        /// <returns>List of allergens or http error code</returns>
         [HttpGet]
         public ActionResult<AllergenContainer> GetAllergens()
         {
