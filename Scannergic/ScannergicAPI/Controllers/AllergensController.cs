@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ScannergicAPI.Repositories;
 using ScannergicAPI.Entities;
-//using HttpRequestMessageExtensions = System.Net.Http.HttpRequestMessageExtensions;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 
 namespace ScannergicAPI.Controllers
@@ -26,7 +25,6 @@ namespace ScannergicAPI.Controllers
             }
             catch (UnableToConnectToTheServer)
             {
-                //return Request(HttpStatusCode.NotFound, "internal error");
                 return StatusCode(500);
             }
             catch (AccessDeniedToDB)
