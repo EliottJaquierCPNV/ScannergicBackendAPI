@@ -1,0 +1,69 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "ScannergicAPI",
+      "version": "v1"
+    },
+    "paths": {
+      "/scannergic/allergens": {
+        "get": {
+          "tags": [
+            "Allergens"
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AllergenContainer"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AllergenContainer"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AllergenContainer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "PlainAllergen": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "name": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "AllergenContainer": {
+          "type": "object",
+          "properties": {
+            "allergens": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PlainAllergen"
+              },
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  }
