@@ -1,38 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ScannergicAPI.Entities;
 
 namespace ScannergicAPI.Repositories
 {
+    /// <summary>
+    /// Is responsible of providing requested Allergen datas
+    /// </summary>
     public class AllergenRepository
     {
-        //private List<Allergen> allergens = new()
-        //{
-        //    new Allergen(1, "lactose", new List<Ingredient>()
-        //        {
-        //            new Ingredient(1, "lait"),
-        //            new Ingredient(2, "crème")
-        //        }),
-        //    new Allergen(2, "gluten", new List<Ingredient>()
-        //        {
-        //            new Ingredient(3, "farine"),
-        //            new Ingredient(4, "blé")
-        //        }),
-        //    new Allergen(3, "fruits à coque", new List<Ingredient>()
-        //        {
-        //            new Ingredient(5, "cacahuètes"),
-        //            new Ingredient(6, "huile d'arachide")
-        //        })
-        //};
         private AllergenRequester allergenRequester = new();
         private List<List<string>> allergens;
 
+        /// <summary>
+        /// Returns an object containing the allergens
+        /// </summary>
+        /// <returns>Contains multiple PlainAllergen objects, dependîng on how much datas there's in the DB</returns>
         public AllergenContainer GetAllergens()
         {
-            try
-            {
                 allergens = allergenRequester.GetPlainAllergensInDB();
                 List<PlainAllergen> plainAllergens = new();
                 foreach (var item in allergens)
@@ -41,17 +25,6 @@ namespace ScannergicAPI.Repositories
                 }
                 AllergenContainer allergensContainer = new AllergenContainer(plainAllergens);
                 return allergensContainer;
-            }
-            catch(UnableToConnectToTheServer)
-            {
-                throw;
-            }
-            catch (AccessDeniedToDB)
-            {
-                throw;
-            }
-
-
         }
 
         //private string GetAllergen(string name)

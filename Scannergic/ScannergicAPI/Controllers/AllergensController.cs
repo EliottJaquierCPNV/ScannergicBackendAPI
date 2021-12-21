@@ -2,6 +2,7 @@
 using ScannergicAPI.Repositories;
 using ScannergicAPI.Entities;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
+using MySql.Data.MySqlClient;
 
 namespace ScannergicAPI.Controllers
 {
@@ -23,11 +24,7 @@ namespace ScannergicAPI.Controllers
             {
                 return repository.GetAllergens();
             }
-            catch (UnableToConnectToTheServer)
-            {
-                return StatusCode(500);
-            }
-            catch (AccessDeniedToDB)
+            catch (MySqlException)
             {
                 return StatusCode(500);
             }

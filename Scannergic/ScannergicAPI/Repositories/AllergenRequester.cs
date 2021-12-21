@@ -6,6 +6,9 @@ using MySql.Data.MySqlClient;
 
 namespace ScannergicAPI.Repositories
 {
+    /// <summary>
+    /// Requests the specific datas needed for the allergens directly to a DBConnector object
+    /// </summary>
     public class AllergenRequester
     {
         private DBConnector dBConnector;
@@ -14,10 +17,17 @@ namespace ScannergicAPI.Repositories
         {
             Initialize();
         }
+        /// <summary>
+        /// creates new DBConnector object
+        /// </summary>
         private void Initialize()
         {
             dBConnector = new DBConnector();
         }
+        /// <summary>
+        /// Creates query and sends it to DBConnnector
+        /// </summary>
+        /// <returns></returns>
         public List<List<string>> GetPlainAllergensInDB()
         {
             string query = "SELECT * FROM allergen;";

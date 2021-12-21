@@ -1,8 +1,5 @@
 ﻿using NUnit.Framework;
 using ScannergicAPI.Repositories;
-using MySql.Data.MySqlClient;
-using System.Collections.Generic;
-using System.ServiceProcess;
 
 namespace TestScannergic
 {
@@ -12,7 +9,7 @@ namespace TestScannergic
         public void GetCredentials_GetAllCreds_Success()
         {
             //given
-            CredentialReader credentialReader = new(@"C:\Users\nonoe\Documents\Projet c#\ScannergicBackendAPI\Scannergic\ScannergicAPI\credentials.json");
+            CredentialReader credentialReader = new("credentials.json");
             DBCredential expectedCredentials = new();
             expectedCredentials.Database = "scannergic";
             expectedCredentials.Server = "localhost";
