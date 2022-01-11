@@ -69,7 +69,9 @@ namespace ScannergicAPI.Repositories
             MySqlDataReader dataReader = cmd.ExecuteReader();
 
             //close Connection
-            // TODO - Find a way to close connection after reading datas
+            // TODO - To allow connection to close without loosing datas,
+            // you need to extract to datas out of the datareader in a list.
+            // Datareader should only be used in this file and not in upper layer files
             //CloseConnection();
 
             //Return datas
