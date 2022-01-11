@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 
 namespace ScannergicAPI.Repositories
 {
+    /// <summary>
+    /// Allow a DB connection and CRUD requests such as SELECT, UPDATE, INSERT, DELETE
+    /// WARNING ! For the moment only SELECT function is correctly implemented, other are private methods for security purposes
+    /// </summary>
     public class DBConnector
     {
         private MySqlConnection connection;
@@ -16,13 +14,14 @@ namespace ScannergicAPI.Repositories
         private string uid;
         private string password;
 
-        //Constructor
         public DBConnector()
         {
             Initialize();
         }
 
-        //Initialize values
+        /// <summary>
+        /// Get credentials and creates connection string. Does it when initializing new DBConnector object
+        /// </summary>
         private void Initialize()
         {
             CredentialReader credentialReader = new("credentials.json");
@@ -37,33 +36,29 @@ namespace ScannergicAPI.Repositories
             connection = new MySqlConnection(connectionString);
         }
 
-        //open connection to database
+        /// <summary>
+        /// Opens connection to DB
+        /// </summary>
         private void OpenConnection()
         {
-            try
-            {
                 connection.Open();
-            }
-            catch (MySqlException ex)
-            {
-                switch (ex.Code)
-                {
-                    case 0:
-                        throw new UnableToConnectToTheServer();
-
-                    case 1045:
-                        throw new AccessDeniedToDB();
-                }
-            }
         }
 
-        //Close connection
+        /// <summary>
+        /// Close connection to DB
+        /// </summary>
         private void CloseConnection()
         {
                 connection.Close();
         }
 
-        //Select statement
+        /// <summary>
+        /// Executes SELECT statement and returns query result
+        /// </summary>
+        /// <param name="query">SELECT query to execute</param>
+        /// <returns>
+        /// MysqlDataReader object, allowing to select the needed datas depending on the data type
+        /// </returns>
         public MySqlDataReader Select(string query)
         {
             //Open connection
@@ -74,15 +69,20 @@ namespace ScannergicAPI.Repositories
             MySqlDataReader dataReader = cmd.ExecuteReader();
 
             //close Connection
-            // TODO - Find a way to close connection after reading datas
+            // TODO - To allow connection to close without loosing datas,
+            // you need to extract to datas out of the datareader in a list.
+            // Datareader should only be used in this file and not in upper layer files
             //CloseConnection();
 
             //Return datas
             return dataReader;
         }
 
-        //Insert statement
-        public void Insert(string query)
+        /// <summary>
+        /// Not implemented yet
+        /// </summary>
+        /// <param name="query"></param>
+        private void Insert(string query)
         {
             //open db connection
             OpenConnection();
@@ -97,8 +97,11 @@ namespace ScannergicAPI.Repositories
             CloseConnection();
         }
 
-        //Update statement
-        public void Update(string query)
+        /// <summary>
+        /// Not implemented yet
+        /// </summary>
+        /// <param name="query"></param>
+        private void Update(string query)
         {
 
             //Open connection
@@ -117,42 +120,16 @@ namespace ScannergicAPI.Repositories
             CloseConnection();
         }
 
-        //Delete statement
-        public void Delete(string query)
+        /// <summary>
+        /// Not implemented yet
+        /// </summary>
+        /// <param name="query"></param>
+        private void Delete(string query)
         {
             OpenConnection();
             MySqlCommand cmd = new MySqlCommand(query, connection);
             cmd.ExecuteNonQuery();
             CloseConnection();
         }
-}
-    public class CredentialReader
-    {
-        private string credFilePath, text;
-        private DBCredential dBCreds;
-
-        public CredentialReader(string credentialFilePath)
-        {
-            credFilePath = credentialFilePath;
-            GetCredentials();
-        }
-
-        private void GetCredentials()
-        {
-            text = System.IO.File.ReadAllText(credFilePath);
-            dBCreds = JsonSerializer.Deserialize<DBCredential>(text);
-        }
-        public DBCredential Credentials { get => dBCreds; }
-
     }
-    public class DBCredential
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Database { get; set; }
-        public string Server { get; set; }
-    }
-    public class DBConnectorException : Exception { }
-    public class UnableToConnectToTheServer : DBConnectorException { }
-    public class AccessDeniedToDB : DBConnectorException { }
 }

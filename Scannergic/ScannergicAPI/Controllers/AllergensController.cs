@@ -2,6 +2,7 @@
 using ScannergicAPI.Repositories;
 using ScannergicAPI.Entities;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
+using MySql.Data.MySqlClient;
 
 namespace ScannergicAPI.Controllers
 {
@@ -15,7 +16,10 @@ namespace ScannergicAPI.Controllers
         {
             repository = new AllergenRepository();
         }
-
+        /// <summary>
+        /// Returns a list of all the allergens as a JSON
+        /// </summary>
+        /// <returns>List of allergens or http error code</returns>
         [HttpGet]
         public ActionResult<AllergenContainer> GetAllergens()
         {
@@ -23,11 +27,7 @@ namespace ScannergicAPI.Controllers
             {
                 return repository.GetAllergens();
             }
-            catch (UnableToConnectToTheServer)
-            {
-                return StatusCode(500);
-            }
-            catch (AccessDeniedToDB)
+            catch (MySqlException)
             {
                 return StatusCode(500);
             }
