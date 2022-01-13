@@ -8,8 +8,18 @@ namespace ScannergicAPI.Repositories
     /// </summary>
     public class AllergenRepository
     {
-        private AllergenRequester allergenRequester = new();
         private List<List<string>> allergens;
+        private DBConnector dBConnector;
+
+        public AllergenRepository()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            dBConnector = new DBConnector();
+        }
 
         /// <summary>
         /// Returns an object containing the allergens
@@ -17,7 +27,7 @@ namespace ScannergicAPI.Repositories
         /// <returns>Contains multiple PlainAllergen objects, dependîng on how much datas there's in the DB</returns>
         public AllergenContainer GetAllergens()
         {
-                allergens = allergenRequester.GetPlainAllergensInDB();
+                allergens = GetPlainAllergensInDB();
                 List<PlainAllergen> plainAllergens = new();
                 foreach (var item in allergens)
                 {
@@ -27,10 +37,11 @@ namespace ScannergicAPI.Repositories
                 return allergensContainer;
         }
 
-        //private string GetAllergen(string name)
-        //{
-        //    Allergen allergen = allergens.Where(allergen => allergen.Name == name).SingleOrDefault();
-        //    return allergen.Name;
-        //}
+        private List<List<string>> GetPlainAllergensInDB()
+        {
+            string query = "SELECT * FROM allergen;";
+            return dBConnector.Select(query);
+
+        }
     }
 }

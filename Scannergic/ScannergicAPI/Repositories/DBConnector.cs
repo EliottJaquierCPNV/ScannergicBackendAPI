@@ -1,4 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
 
 namespace ScannergicAPI.Repositories
 {
@@ -59,7 +61,7 @@ namespace ScannergicAPI.Repositories
         /// <returns>
         /// MysqlDataReader object, allowing to select the needed datas depending on the data type
         /// </returns>
-        public MySqlDataReader Select(string query)
+        public List<List<string>> Select(string query)
         {
             //Open connection
             OpenConnection();
@@ -69,13 +71,22 @@ namespace ScannergicAPI.Repositories
             MySqlDataReader dataReader = cmd.ExecuteReader();
 
             //close Connection
-            // TODO - To allow connection to close without loosing datas,
-            // you need to extract to datas out of the datareader in a list.
-            // Datareader should only be used in this file and not in upper layer files
-            //CloseConnection();
+            List<List<string>> datas = new List<List<string>>();
 
-            //Return datas
-            return dataReader;
+            while (dataReader.Read())
+            {
+                List<string> tempList = new();
+
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    tempList.Add(dataReader.GetValue(i).ToString());
+                }
+
+                datas.Add(tempList);
+            }
+            CloseConnection();
+
+            return datas;
         }
 
         /// <summary>
