@@ -12,20 +12,17 @@ namespace TestScannergic
         {
             //given
             AllergenRepository allergenRepository = new();
-            AllergenContainer expectedAllergens = new(new List<PlainAllergen>(){
+            List<PlainAllergen> expectedAllergens = new List<PlainAllergen>(){
                 new PlainAllergen(2, "fruits à coque"),
                 new PlainAllergen(1, "lactose")
-            });
-            AllergenContainer actualAllergens;
+            };
+            List<PlainAllergen> actualAllergens;
 
             //when
-            actualAllergens = allergenRepository.GetAllergens();
+            actualAllergens = allergenRepository.GetAllergens().allergens;
 
             //then
-
-            //TODO - Find another way to test that actualAllergens and expectedAllergens are the same
-
-            //Assert.AreEqual(expectedAllergens, actualAllergens);
+            CollectionAssert.AreEqual(expectedAllergens, actualAllergens);
         }
     }
 }

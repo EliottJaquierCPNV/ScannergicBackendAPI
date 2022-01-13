@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace ScannergicAPI.Entities
 {
-    public record AllergenContainer(IEnumerable<PlainAllergen> allergens);
+    public record AllergenContainer(List<PlainAllergen> allergens);
 }
