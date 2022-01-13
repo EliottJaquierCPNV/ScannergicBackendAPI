@@ -32,5 +32,17 @@ namespace ScannergicAPI.Controllers
                 return StatusCode(500);
             }
         }
+
+        public ActionResult<AllergenContainer> GetAllergensByProdct(long productNumber)
+        {
+            try
+            {
+                throw new System.NotImplementedException();
+            }
+            catch (MySqlException)
+            {
+                return StatusCode(500);
+            }
+        }
     }
 }
