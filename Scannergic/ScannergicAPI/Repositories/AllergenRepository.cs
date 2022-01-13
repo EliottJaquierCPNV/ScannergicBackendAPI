@@ -41,6 +41,8 @@ namespace ScannergicAPI.Repositories
             List<string> allergen = GetPlainAllergenInDB(productNumber);
             List<PlainAllergen> plainAllergen = new();
 
+            // TODO - Manage the case where product has several allergens
+
             plainAllergen.Add(new PlainAllergen(int.Parse(allergen[0]), allergen[1]));
 
             return new AllergenContainer(plainAllergen);
