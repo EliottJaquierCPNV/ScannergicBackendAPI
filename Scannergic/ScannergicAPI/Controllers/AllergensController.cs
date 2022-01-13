@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using ScannergicAPI.Repositories;
 using ScannergicAPI.Entities;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
@@ -6,7 +7,7 @@ using MySql.Data.MySqlClient;
 
 namespace ScannergicAPI.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/allergens")]
+    [Route("api/allergens")]
     [ApiController]
     public class AllergensController : ControllerBase
     {
@@ -32,12 +33,12 @@ namespace ScannergicAPI.Controllers
                 return StatusCode(500);
             }
         }
-
-        public ActionResult<AllergenContainer> GetAllergensByProdct(long productNumber)
+        [HttpGet("{productNumber}")]
+        public ActionResult<AllergenContainer> GetAllergensByProduct(string productNumber)
         {
             try
             {
-                throw new System.NotImplementedException();
+                return repository.GetAllergen(productNumber);
             }
             catch (MySqlException)
             {
