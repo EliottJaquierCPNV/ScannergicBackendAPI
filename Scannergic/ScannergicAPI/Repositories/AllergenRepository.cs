@@ -73,7 +73,7 @@ namespace ScannergicAPI.Repositories
                 throw new ProductNotFound();
             }
             // TODO - Secure to avoid SQL injections
-            string query = @"SELECT allergen.id, allergen.name FROM	product
+            string query = @"SELECT DISTINCT allergen.id, allergen.name FROM	product
 INNER JOIN product_has_ingredient ON product.id = product_has_ingredient.product_id
 INNER JOIN ingredient ON ingredient.id = product_has_ingredient.ingredient_id
 INNER JOIN ingredient_has_allergen ON ingredient.id = ingredient_has_allergen.ingredient_id
