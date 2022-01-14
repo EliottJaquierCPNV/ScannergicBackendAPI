@@ -67,13 +67,18 @@ namespace ScannergicAPI.Repositories
 
         private List<List<string>> GetPlainAllergensInDB(string productNumber)
         {
+            long parsedProductNumber = 0;
+            if (!long.TryParse(productNumber, out parsedProductNumber))
+            {
+                throw new ProductNotFound();
+            }
             // TODO - Secure to avoid SQL injections
             string query = @"SELECT allergen.id, allergen.name FROM	product
 INNER JOIN product_has_ingredient ON product.id = product_has_ingredient.product_id
 INNER JOIN ingredient ON ingredient.id = product_has_ingredient.ingredient_id
 INNER JOIN ingredient_has_allergen ON ingredient.id = ingredient_has_allergen.ingredient_id
-INNER JOIN allergen ON allergen.id = ingredient_has_allergen.ingredient_id
-WHERE product.UPC =" + productNumber + ";";
+INNER JOIN allergen ON allergen.id = ingredient_has_allergen.allergen_id
+WHERE product.UPC =" + parsedProductNumber + ";";
 
             return dBConnector.Select(query); ;
         }
