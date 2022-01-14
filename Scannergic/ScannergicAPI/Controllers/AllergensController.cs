@@ -34,15 +34,19 @@ namespace ScannergicAPI.Controllers
             }
         }
         [HttpGet("{productNumber}")]
-        public ActionResult<AllergenContainer> GetAllergensByProduct(string productNumber)
+        public ActionResult<AllergenContainer> GetAllergens(string productNumber)
         {
             try
             {
-                return repository.GetAllergen(productNumber);
+                return repository.GetAllergens(productNumber);
             }
             catch (MySqlException)
             {
                 return StatusCode(500);
+            }
+            catch (ProductNotFound)
+            {
+                return NotFound();
             }
         }
     }

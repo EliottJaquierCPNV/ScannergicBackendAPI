@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ScannergicAPI.Entities;
 
 namespace ScannergicAPI.Repositories
@@ -36,16 +37,25 @@ namespace ScannergicAPI.Repositories
                 AllergenContainer allergensContainer = new AllergenContainer(plainAllergens);
                 return allergensContainer;
         }
-        public AllergenContainer GetAllergen(string productNumber)
+        public AllergenContainer GetAllergens(string productNumber)
         {
-            List<string> allergen = GetPlainAllergenInDB(productNumber);
+            List<List<string>> allergens = GetPlainAllergensInDB(productNumber);
             List<PlainAllergen> plainAllergen = new();
 
-            // TODO - Manage the case where product has several allergens
+            ProductExists(productNumber);
 
-            plainAllergen.Add(new PlainAllergen(int.Parse(allergen[0]), allergen[1]));
-
-            return new AllergenContainer(plainAllergen);
+            if(allergens.Count != 0)
+            {
+                foreach(var allergen in allergens)
+                {
+                    plainAllergen.Add(new PlainAllergen(int.Parse(allergen[0]), allergen[1]));
+                }
+                return new AllergenContainer(plainAllergen);
+            }
+            else
+            {
+                return new AllergenContainer(new List<PlainAllergen>());
+            }
         }
 
         private List<List<string>> GetPlainAllergensInDB()
@@ -55,18 +65,29 @@ namespace ScannergicAPI.Repositories
 
         }
 
-        // TODO - Implement the case where product is not found (return error to the client)
-        private List<string> GetPlainAllergenInDB(string productNumber)
+        private List<List<string>> GetPlainAllergensInDB(string productNumber)
         {
+            // TODO - Secure to avoid SQL injections
             string query = @"SELECT allergen.id, allergen.name FROM	product
 INNER JOIN product_has_ingredient ON product.id = product_has_ingredient.product_id
 INNER JOIN ingredient ON ingredient.id = product_has_ingredient.ingredient_id
 INNER JOIN ingredient_has_allergen ON ingredient.id = ingredient_has_allergen.ingredient_id
 INNER JOIN allergen ON allergen.id = ingredient_has_allergen.ingredient_id
 WHERE product.UPC =" + productNumber + ";";
-            List<List<string>> result = dBConnector.Select(query);
 
-            return result[0];
+            return dBConnector.Select(query); ;
+        }
+        private void ProductExists(string productNumber)
+        {
+            string query = "SELECT product.UPC FROM product WHERE product.UPC =" + productNumber + ";";
+            List<List<string>> product = dBConnector.Select(query);
+            if (product.Count == 0)
+            {
+                throw new ProductNotFound();
+            }
         }
     }
+    public class AllergenRepositoryException : Exception { }
+    public class ProductNotFound : AllergenRepositoryException { }
+
 }
