@@ -6,7 +6,7 @@ INSERT INTO scannergic.ingredient
 VALUE (1, "farine de blé"),(2,"lait"),(3,"levure"),(4,"huile de colza"),(5,"vinaigre de table"),(6,"sel de cuisine iodé");
 
 INSERT INTO scannergic.product
-VALUE (1,"American Favorites", 7612345978900);
+VALUE (1,"American Favorites", 7612345978901);
 
 INSERT INTO scannergic.ingredient_has_allergen
 VALUE (1, 1), (2, 2);
