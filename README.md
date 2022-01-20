@@ -61,15 +61,17 @@ Once it is done you'll need to create the database with the script named **Datab
 
 Once done, go to **ScannergicBackendAPI\Scannergic\ScannergicAPI\credentials.json** and edit the database credentials to fit to yours.
 
-Then go to the project folder where you cloned the project and click on the **.sln** file to open the project in Visual Studio. Run the project's tests by clicking this button : [capture]
+Then go to the project folder where you cloned the project and click on the **.sln** file to open the project in Visual Studio. Run the project's tests by clicking this button :
+
+<img width="302" alt="image" src="https://user-images.githubusercontent.com/61775725/150324553-2e5062c3-780b-41d8-a828-967f0398f09b.png">
 
 In order ton run the project you need to click on this button :
 
-[capture]
+<img width="236" alt="image" src="https://user-images.githubusercontent.com/61775725/150324650-c9fac310-e01e-4ad6-81e1-96590b25b477.png">
 
 A web page will open in your browser and you should see this 
 
-[capture swagger]
+![image](https://user-images.githubusercontent.com/61775725/150324790-ceda5845-8c76-48d1-99cc-d543cd809b04.png)
 
 From there you can try the API and you're all set !
 
