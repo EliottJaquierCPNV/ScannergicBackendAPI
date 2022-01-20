@@ -43,7 +43,7 @@ namespace ScannergicAPI.Repositories
         /// </summary>
         private void OpenConnection()
         {
-                connection.Open();
+            connection.Open();
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace ScannergicAPI.Repositories
         /// </summary>
         private void CloseConnection()
         {
-                connection.Close();
+            connection.Close();
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace ScannergicAPI.Repositories
         /// </summary>
         /// <param name="query">SELECT query to execute</param>
         /// <returns>
-        /// MysqlDataReader object, allowing to select the needed datas depending on the data type
+        /// A list of lists of string containing selected datas
         /// </returns>
         public List<List<string>> Select(string query)
         {
@@ -89,58 +89,5 @@ namespace ScannergicAPI.Repositories
             return datas;
         }
 
-        /// <summary>
-        /// Not implemented yet
-        /// </summary>
-        /// <param name="query"></param>
-        private void Insert(string query)
-        {
-            //open db connection
-            OpenConnection();
-
-            //create command and assign the query and connection from the constructor
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-
-            //Execute command
-            cmd.ExecuteNonQuery();
-
-            //close connection
-            CloseConnection();
-        }
-
-        /// <summary>
-        /// Not implemented yet
-        /// </summary>
-        /// <param name="query"></param>
-        private void Update(string query)
-        {
-
-            //Open connection
-            OpenConnection();
-            //create mysql command
-            MySqlCommand cmd = new MySqlCommand();
-            //Assign the query using CommandText
-            cmd.CommandText = query;
-            //Assign the connection using Connection
-            cmd.Connection = connection;
-
-            //Execute query
-            cmd.ExecuteNonQuery();
-
-            //close connection
-            CloseConnection();
-        }
-
-        /// <summary>
-        /// Not implemented yet
-        /// </summary>
-        /// <param name="query"></param>
-        private void Delete(string query)
-        {
-            OpenConnection();
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.ExecuteNonQuery();
-            CloseConnection();
-        }
     }
 }

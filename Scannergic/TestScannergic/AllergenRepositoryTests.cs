@@ -13,8 +13,9 @@ namespace TestScannergic
             //given
             AllergenRepository allergenRepository = new();
             List<PlainAllergen> expectedAllergens = new List<PlainAllergen>(){
-                new PlainAllergen(2, "fruits à coque"),
-                new PlainAllergen(1, "lactose")
+                new PlainAllergen(3, "arachide"),
+                new PlainAllergen(1, "gluten"),
+                new PlainAllergen(2, "lactose")
             };
             List<PlainAllergen> actualAllergens;
 

@@ -5,6 +5,10 @@
 
 Our idea is to develop an android application which would allow people with allergies to fill them in the app, scan the barcode of a product and quickly know if they can eat the product or not. So the application knows, according to the different allergies, which product can be eaten or not. To do this, the android app will be requesting the allergies contained in the product to an API.
 
+The API will be developed in this part of the project so all the code you will find in it is related to the development of the API.
+
+To get the other part of the project (Android App) please [click here](https://github.com/EliottJaquierCPNV/Scannergic)
+
 ### Goal
 
 This application aims at simplifying people with allergies' life allowing them to quickly know if they can eat a product or not.
@@ -13,8 +17,6 @@ This application aims at simplifying people with allergies' life allowing them t
 
 API : ASP.NET / C#
 
-HMI (Human Machine Interface) : 
-
 Database : MySQL
 
 ### Schematic diagram
@@ -22,31 +24,58 @@ Database : MySQL
 ![SchémadePrincipe2](https://user-images.githubusercontent.com/61775725/141955527-72237c5a-a55d-431d-a332-4cf52c142d89.png)
 
 ## Prerequisites
-### To use
+### To run
 Server side :
- - .NET runtime for ASP.NET
- - (ISS Web server)
-Client side :
- - Android phone (whit the APK installed)
+ - .NET runtime 5.0 : https://dotnet.microsoft.com/en-us/download/dotnet/5.0
+ - MySQL community 8.0
 ### To collaborate
-Visual Studio (2019 community is used) / C# compiler
-Packages :
- - WEB Developpement ASP.NET
+- Visual Studio 2019 Community or Enterprise with the following packages :
+  Packages : https://visualstudio.microsoft.com/fr/vs/older-downloads/
+   - WEB Development and ASP.NET
 
-A MySQL client / SGBDR (for managing database)
+- A MySQL client, recommend Heidi : https://www.heidisql.com/download.php
 
-#### To design
-- Balsamiq Wireframe / Mockup
-- Draw.io / Diagrams.net
-- Astah Community / UML
 
-### To test the API on Development environment
 
-- VMWare Workstation 16 Pro
+#### To open documentation
+- Draw.io / Diagrams.net : https://www.microsoft.com/fr-ch/p/drawio-diagrams/9mvvszk43qqw?activetab=pivot:overviewtab
+- Astah Community / UML : https://astah.net/downloads/
 
-  **Warning : ** from VMWare 15.5 version you may need to enable Hyper-V in Windows 10 functionalities otherwise your computer will crash (blue screen).
 
-  **Source** :  https://blogs.vmware.com/workstation/2020/05/vmware-workstation-now-supports-hyper-v-mode.html
 
-- Debian 11.x Virtual Machine
+#### How to setup the project
+
+To clone the project run the following command :
+
+```bash
+git clone https://github.com/EliottJaquierCPNV/ScannergicBackendAPI
+```
+
+Then checkout on the right branch
+
+```bash
+git checkout develop
+```
+
+Once it is done you'll need to create the database with the script named **DatabaseCreation.sql** in **SQL scripts/**. Connect to your MySQL server using your Heidi or other SQL client and execute the script. If you want to put some test data in the DB to test the API, repeat the process with the **Population.sql** script.
+
+Once done, go to **ScannergicBackendAPI\Scannergic\ScannergicAPI\credentials.json** and edit the database credentials to fit to yours.
+
+Then go to the project folder where you cloned the project and click on the **.sln** file to open the project in Visual Studio. Run the project's tests by clicking this button :
+
+<img width="302" alt="image" src="https://user-images.githubusercontent.com/61775725/150324553-2e5062c3-780b-41d8-a828-967f0398f09b.png">
+
+In order ton run the project you need to click on this button :
+
+<img width="236" alt="image" src="https://user-images.githubusercontent.com/61775725/150324650-c9fac310-e01e-4ad6-81e1-96590b25b477.png">
+
+A web page will open in your browser and you should see this 
+
+![image](https://user-images.githubusercontent.com/61775725/150324790-ceda5845-8c76-48d1-99cc-d543cd809b04.png)
+
+From there you can try the API and you're all set !
+
+
+
+**Note :** you only need to run the project, on a server for example please follow the process described in the wiki.
 
